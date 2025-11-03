@@ -27,7 +27,27 @@ public class BinarySearchTree
     {
         var values = GetValuesInOrder(Root, Root!.Value);
         Console.WriteLine("Values in-order: ");
-        Console.WriteLine(string.Join(", ", values) + "\n\n");
+        Console.WriteLine(string.Join(", ", values) + "\n");
+    }
+
+    public void GetHeight()
+    {
+        int height = CalculateHeight(Root);
+        Console.WriteLine($"Height from tree is: {height}");
+    }
+
+    public static int CalculateHeight(Node? root)
+    {
+        if (root is null)
+            return -1;
+
+        if (root.Left is null || root.Right is null)
+            return 0;
+
+        int leftHeight = CalculateHeight(root!.Left);
+        int rightHeight = CalculateHeight(root!.Right);
+
+        return Math.Max(leftHeight, rightHeight) + 1;
     }
 
     //Busca recursiva na árvore binária até encontrar os valores em ordem

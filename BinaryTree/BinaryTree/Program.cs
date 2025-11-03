@@ -21,6 +21,9 @@ tree.Search(valueSearch);
 
 tree.InOrder();
 
+tree.GetHeight();
+
 //Method insert ✅
 //Method find/Search ✅
 //Method In-Order ✅
+//Method GetHeight ✅
