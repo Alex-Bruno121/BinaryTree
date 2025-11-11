@@ -36,7 +36,65 @@ public class BinarySearchTree
         Console.WriteLine($"Height from tree is: {height}");
     }
 
-    public static int CalculateHeight(Node? root)
+    public void Remove(int value)
+    {
+        Root = RemoveNode(Root, value);
+    }
+
+    public void PrintMessage() => PrintSelectCommand();
+
+    private static void PrintSelectCommand()
+    {
+        Console.WriteLine("=====================================");
+        Console.WriteLine("============= Options ===============");
+        Console.WriteLine("=====================================");
+        Console.WriteLine("1 - Insert value ");
+        Console.WriteLine("2 - Search a value ");
+        Console.WriteLine("3 - Value in order ");
+        Console.WriteLine("4 - Calculate Height ");
+        Console.WriteLine("5 - Remove value ");
+        Console.WriteLine("0 - Exit ");
+        Console.WriteLine("=====================================");
+        Console.WriteLine("=====================================");
+    }
+
+    private static Node RemoveNode(Node? root, int value)
+    {
+        if (root is null)
+            return null;
+
+        if (root.Value == value)
+        {
+            //Caso 1: Nó sem filhos (folha)
+            if (root.Left is null && root.Right is null)
+                return null;
+
+            //Caso 2: Nó com um filho
+            if (root.Left is null)
+                return root.Right;
+            if (root.Right is null)
+                return root.Left;
+
+            //Caso 3: Nó com dois filhos - encontrar o sucessor
+            //(menor valor na subárvore direita para substituir)
+            Node successor = root.Right;
+            while (successor.Left is not null)
+                successor = successor.Left;
+
+            root.Value = successor.Value;
+            root.Right = RemoveNode(root.Right, successor.Value);
+        }
+
+        if (value < root.Value)
+            root.Left = RemoveNode(root.Left, value);
+
+        if (value > root.Value)
+            root.Right = RemoveNode(root.Right, value);
+
+        return root;
+    }
+
+    private static int CalculateHeight(Node? root)
     {
         if (root is null)
             return -1;
@@ -51,7 +109,7 @@ public class BinarySearchTree
     }
 
     //Busca recursiva na árvore binária até encontrar os valores em ordem
-    public static List<int> GetValuesInOrder(Node? root, int values)
+    private static List<int> GetValuesInOrder(Node? root, int values)
     {
         var result = new List<int>();
 
